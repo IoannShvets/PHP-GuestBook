@@ -65,9 +65,6 @@
 		}
 	}
 ?>
-
 <p><a href ="add_new.php">Добавить отзыв</a>
- 
-
 </body>
 </html>
