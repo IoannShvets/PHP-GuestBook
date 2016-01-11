@@ -13,14 +13,14 @@
 	$start = $page * $per_page;
 	// Составляем запрос и выводим записи
 	// Переменную $start используем, как нумератор записей.
-	$sql = "SELECT * FROM `gb`";
+	$sql = "SELECT * FROM `date` DESC LIMIT $start, $per_page";
 
 	if ($_GET['sort'] == 'date') {
-    	$sql .= " ORDER BY `date` DESC LIMIT $start, $per_page";
+    	$sql = "SELECT * FROM `gb` ORDER BY `date` DESC LIMIT $start, $per_page";
 	} elseif ($_GET['sort'] == 'name') {
-    	$sql .= " ORDER BY `name` DESC LIMIT $start, $per_page";
+    	$sql = "SELECT * FROM `gb` ORDER BY `name` DESC LIMIT $start, $per_page";
 	} elseif ($_GET['sort'] == 'content') {
-    	$sql .= " ORDER BY content DESC LIMIT $start, $per_page";
+    	$sql = "SELECT * FROM `gb` ORDER BY content DESC LIMIT $start, $per_page";
 	}
 
 	$result=mysql_query($sql);
