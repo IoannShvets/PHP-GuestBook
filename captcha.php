@@ -2,7 +2,7 @@
 	session_start();
 	$string = "";
 	for ($i = 0; $i < 5; $i++) // задаем кол-во символов 
-		$string .= chr(rand(97, 122)); // выводим случайные символы
+	$string .= chr(rand(97, 122)); // выводим случайные символы
 	$_SESSION['rand_code'] = $string; //  Создаем сессию, где будут символы хранится
 	$dir = "fonts/"; // Подключаем шрифты
 	$image = imagecreatetruecolor(170, 60); //  Размер картинки
