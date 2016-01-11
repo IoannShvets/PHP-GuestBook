@@ -30,7 +30,7 @@
 	echo ' <th>Удалить</th>';
 	echo ' <th>Редактировать</th>';
 	echo '</tr>';
-	echo '</thead>';
+	echo '</thead>'; 
 	// Выводим данные с базы в таблицу
 	while($row=mysql_fetch_array($result)) {
 		echo '<tr>';
