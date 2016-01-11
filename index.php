@@ -13,7 +13,7 @@
 	$start = $page * $per_page;
 	// Составляем запрос и выводим записи
 	// Переменную $start используем, как нумератор записей.
-	$query = "SELECT * FROM `gb` order by `date` DESC LIMIT $start, $per_page";
+	$query = "SELECT * FROM `gb` order by `name` DESC LIMIT $start, $per_page";
 	$result=mysql_query($query);
 	// Создаем таблицу для данных
 	echo '<table class="table table-bordered">';
@@ -21,9 +21,9 @@
 	echo '<tr>';
 	echo '<th>Дата</th>';
 	echo '<th>IP</th>';
-	echo ' <th>Браузер</th>';
-	echo ' <th>Имя</th>';
-	echo ' <th>Отзыв</th>';
+	echo '<th>Браузер</th>';
+	echo '<th>Имя</th>';
+	echo '<th>Отзыв</th>';
 	echo '</tr>';
 	echo '</thead>';
 	// Выводим данные с базы в таблицу
@@ -47,6 +47,7 @@
 		echo '</tr>';
 	}
 	echo '</table>';
+
 	// Выводим ссылки на страницы
 	$q="SELECT count(*) FROM `gb`";
 	$res=mysql_query($q);
@@ -55,16 +56,29 @@
 	$num_pages=ceil($total_rows/$per_page);
 	for($i=1;$i<=$num_pages;$i++) {
 		if ($i-1 == $page) {
-			echo '<div class="pagination">';
-			echo '<li class="active">'.$i.'</li>';
-			echo '</div>';
+			echo $i;
 		} else {
-			echo '<div class="pagination">';
-			echo '<li><a href="'.$_SERVER['PHP_SELF'].'?page='.$i.'">'.$i.'</a></li>';
-			echo '</div>';
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?page='.$i.'">'.$i.'</a>';
 		}
 	}
+
+	// Сортировка
+	$sql = "SELECT * FROM `gb`";
+
+	if ($_GET['sort'] == 'date') {
+    	$sql .= " ORDER BY `date` DESC";
+	} elseif ($_GET['sort'] == 'name') {
+    	$sql .= " ORDER BY `name` DESC";
+	} elseif ($_GET['sort'] == 'content') {
+    	$sql .= " ORDER BY content DESC";
+    	echo '<p> Запрос в sql: ' . $sql . '<p>';
+	}
+
+
 ?>
+<p> Сортировка: 
+<p><a href="index.php?sort=date">Дата</a> | <a href="index.php?sort=name">Имея</a> | <a href="index.php?sort=content">Отзывы</a>
+
 <p><a href ="add_new.php">Добавить отзыв</a>
 </body>
 </html>
