@@ -13,8 +13,17 @@
 	$start = $page * $per_page;
 	// Составляем запрос и выводим записи
 	// Переменную $start используем, как нумератор записей.
-	$query = "SELECT * FROM `gb` order by `name` DESC LIMIT $start, $per_page";
-	$result=mysql_query($query);
+	$sql = "SELECT * FROM `gb`";
+
+	if ($_GET['sort'] == 'date') {
+    	$sql .= " ORDER BY `date` DESC LIMIT $start, $per_page";
+	} elseif ($_GET['sort'] == 'name') {
+    	$sql .= " ORDER BY `name` DESC LIMIT $start, $per_page";
+	} elseif ($_GET['sort'] == 'content') {
+    	$sql .= " ORDER BY content DESC LIMIT $start, $per_page";
+	}
+
+	$result=mysql_query($sql);
 	// Создаем таблицу для данных
 	echo '<table class="table table-bordered">';
 	echo '<thead>';
@@ -62,22 +71,10 @@
 		}
 	}
 
-	// Сортировка
-	$sql = "SELECT * FROM `gb`";
-
-	if ($_GET['sort'] == 'date') {
-    	$sql .= " ORDER BY `date` DESC";
-	} elseif ($_GET['sort'] == 'name') {
-    	$sql .= " ORDER BY `name` DESC";
-	} elseif ($_GET['sort'] == 'content') {
-    	$sql .= " ORDER BY content DESC";
-    	echo '<p> Запрос в sql: ' . $sql . '<p>';
-	}
-
 
 ?>
 <p> Сортировка: 
-<p><a href="index.php?sort=date">Дата</a> | <a href="index.php?sort=name">Имея</a> | <a href="index.php?sort=content">Отзывы</a>
+<p><a href="index.php?sort=date">Дата</a> | <a href="index.php?sort=name">Имя</a> | <a href="index.php?sort=content">Отзывы</a>
 
 <p><a href ="add_new.php">Добавить отзыв</a>
 </body>
