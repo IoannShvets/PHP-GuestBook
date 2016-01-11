@@ -17,7 +17,7 @@
 		$insert_sql = "INSERT INTO gb (date, ip_adress, browser, name, content)" . "VALUES('{$date}' , '{$ip_adress}', '{$browser}' , '{$name}' , '{$content}');";
 		mysql_query($insert_sql); // Записываем в базу
 		echo "Капча введена верно, ваш отзыв успешно добавлен!";
-	}
+	} 
 ?>
 </body>
 </html>
