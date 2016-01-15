@@ -14,10 +14,11 @@
 		$browser = $_SERVER['HTTP_USER_AGENT'];  // Узнаем браузер
 		$name = trim($_REQUEST['name']); // считываем данные с поля
 		$content = trim($_REQUEST['content']); // считываем данные с поля
-		$insert_sql = "INSERT INTO gb (date, ip_adress, browser, name, content)" . "VALUES('{$date}' , '{$ip_adress}', '{$browser}' , '{$name}' , '{$content}');";
+		$site = trim($_REQUEST['site']); // считываем данные с поля
+		$insert_sql = "INSERT INTO gb (date, ip_adress, browser, name, content,site)" . "VALUES('{$date}' , '{$ip_adress}', '{$browser}' , '{$name}' , '{$content}', '{$site}');";
 		mysql_query($insert_sql); // Записываем в базу
-		echo "Капча введена верно, ваш отзыв успешно добавлен!";
-	} 
+		echo "<meta http-equiv='refresh' content='0;url=index.php'>";
+	}
 ?>
 </body>
 </html>
