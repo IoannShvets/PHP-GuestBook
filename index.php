@@ -1,8 +1,29 @@
 <html>
 <head>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <style>
+        .sort {
+        	float:left ;
+        	margin-left: 20px;
+    		margin-top: 10px;
+    		padding-bottom: 10px;
+        }
+        .add_new{
+        	float: right;
+        	margin-right: 20px;
+   			margin-top: 10px;
+    		padding-bottom: 10px;
+        }
+        </style>
 </head>
 <body>
+<div class=sort>
+<p> Сортировка по убыванию: <a href="index.php?sort=date-desc">Дата</a> | <a href="index.php?sort=name-desc">Имя</a> | <a href="index.php?sort=content-desc">Отзывы</a>
+<p> Сортировка по возростанию: <a href="index.php?sort=date-asc">Дата</a> | <a href="index.php?sort=name-asc">Имя</a> | <a href="index.php?sort=content-asc">Отзывы</a>
+</div>
+<div class=add_new>
+<p><a href ="add_new.php">Добавить отзыв</a>
+</div>
 <?php 
 	// Подключаемся к БД
 	require 'connect.php';
@@ -15,12 +36,21 @@
 	// Переменную $start используем, как нумератор записей.
 	$sql = "SELECT * FROM `date` DESC LIMIT $start, $per_page";
 
-	if ($_GET['sort'] == 'date') {
+	if ($_GET['sort'] == 'date-desc') {
     	$sql = "SELECT * FROM `gb` ORDER BY `date` DESC LIMIT $start, $per_page";
-	} elseif ($_GET['sort'] == 'name') {
+	} elseif ($_GET['sort'] == 'name-desc') {
     	$sql = "SELECT * FROM `gb` ORDER BY `name` DESC LIMIT $start, $per_page";
-	} elseif ($_GET['sort'] == 'content') {
-    	$sql = "SELECT * FROM `gb` ORDER BY content DESC LIMIT $start, $per_page";
+	} elseif ($_GET['sort'] == 'content-desc') {
+    	$sql = "SELECT * FROM `gb` ORDER BY `content` DESC LIMIT $start, $per_page";
+	} elseif ($_GET['sort'] == 'date-asc') {
+    	$sql = "SELECT * FROM `gb` ORDER BY `date` ASC LIMIT $start, $per_page";
+	} elseif ($_GET['sort'] == 'name-asc') {
+    	$sql = "SELECT * FROM `gb` ORDER BY `name` ASC LIMIT $start, $per_page";
+	} elseif ($_GET['sort'] == 'content-asc') {
+    	$sql = "SELECT * FROM `gb` ORDER BY `content` ASC LIMIT $start, $per_page";
+	} 
+	else  {
+    	$sql = "SELECT * FROM `gb` ORDER BY `date` DESC LIMIT $start, $per_page";
 	}
 
 	$result=mysql_query($sql);
@@ -33,6 +63,7 @@
 	echo '<th>Браузер</th>';
 	echo '<th>Имя</th>';
 	echo '<th>Отзыв</th>';
+	echo '<th>Сайт</th>';
 	echo '</tr>';
 	echo '</thead>';
 	// Выводим данные с базы в таблицу
@@ -52,6 +83,9 @@
 		echo '</td>';
 		echo '<td>';
 		echo htmlspecialchars($row['content'], ENT_QUOTES, 'UTF-8'); // выводим данные
+		echo '</td>';
+		echo '<td>';
+		echo htmlspecialchars($row['site'], ENT_QUOTES, 'UTF-8'); // выводим данные
 		echo '</td>';
 		echo '</tr>';
 	}
@@ -73,9 +107,7 @@
 
 
 ?>
-<p> Сортировка: 
-<p><a href="index.php?sort=date">Дата</a> | <a href="index.php?sort=name">Имя</a> | <a href="index.php?sort=content">Отзывы</a>
+<br />
 
-<p><a href ="add_new.php">Добавить отзыв</a>
 </body>
 </html>
