@@ -1,7 +1,8 @@
 <html>
 <body>
 <?php
-require 'connect.php'; //Подключаемся к БД
+	require 'connect.php'; //Подключаемся к БД
+	session_start();
 
 	if( isset($_GET['edit']) )
 	{
@@ -10,18 +11,20 @@ require 'connect.php'; //Подключаемся к БД
 		$row= mysql_fetch_array($res);
 	}
  
-	if( isset($_POST['newName']) )
+	if( isset($_POST['content']) )
 	{
-		$newName = $_POST['name'];
+		$content = $_POST['content'];
+		$ids = $_POST['id'];		
 		$id  	 = $_POST['id'];
-		$sql     = "UPDATE `gb` SET name=$newName WHERE id='$id'";
+		$sql     = "UPDATE `gb` SET `content`='$content' WHERE `id`='$ids'";
 		$res 	 = mysql_query($sql);
-		echo $sql;
+		echo "<meta http-equiv='refresh' content='0;url=login.php'>";
 	}
 ?>
 	<form action="edit.php" method="POST">
-		Изменить имя <input name="name" type="text" value=""><br>
-		<input type="hidden" name="id" value="">
+		Изменить отзыв<p>
+		 <textarea name="content" cols="40" rows="10" value=""></textarea><br>
+		<input type="hidden" name="id" value="<?php echo $row[0]; ?>">
 		<input name="submit" type="submit" value="Изменить">
 	</form>
 
